@@ -1,0 +1,44 @@
+---
+title: "Realisasi Sparepart 2020"
+author: "Aris Warsito"
+date: "2 April 2020"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Report Maret 2020  
+Halaman ini berisi laporan ajuan dan realisasi sparepart periode maret 2020  
+
+### Tabel Ajuan dari User  
+
+
+```{r include=FALSE}
+library(kableExtra)
+library(knitr)
+library(tidyverse)
+ajuan_03 <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQyzWENYo8j5mtMAgH04yoJ3ams0FdmeRrk5FikO93jq6g3__7iCm-c5nX9dP2WScA_h2Q_lOEFGOZU/pub?gid=0&single=true&output=csv")
+realisasi_03 <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRmL2ZS3_Ai5yg9v55ZPIorZxTtZSuYApa4Ti2ut0i3FfBGb9Hr624WJidDWQalyWPWdGRzXiJtosLj/pub?gid=0&single=true&output=csv")
+
+total_ajuan_03 <- ajuan_03 %>% 
+                      group_by(NAMA.SEKSI.PLANNER) %>%
+                      summarize(jumlah = sum(total, na.rm=TRUE))
+format(total_ajuan_03$jumlah, big.mark=",",scientific=FALSE)                      
+                                            
+total_ajuan_03
+                    
+```
+```{r, layout="l-body-outset"}
+kable(total_ajuan_03, digits = 3, format.args = list(big.mark = ",", 
+  scientific = FALSE)) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+
+
+```
+
