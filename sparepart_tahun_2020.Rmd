@@ -14,7 +14,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ## Report Maret 2020  
 Halaman ini berisi laporan ajuan dan realisasi sparepart periode maret 2020  
-
+-------------------------------  
+##   
 ### Tabel Ajuan dari User  
 
 
@@ -44,7 +45,10 @@ kable(total_ajuan_03, digits = 3, format.args = list(big.mark = ",",
 
 
 ```
-  
+---------------------------------------------   
+     
+##   
+
 ### Daftar Jumlah Realisasi sparepart per unit kerja  
 ```{r include=FALSE}
 realisasi_03$Amount.in.LC <- as.numeric(as.character(realisasi_03$Amount.in.LC))
@@ -56,7 +60,8 @@ format(total_realisasi_03$jumlah, big.mark=",",scientific=FALSE)
                                             
 total_realisasi_03
 ```
-------------------------------------------
+  
+  
 ```{r, echo=FALSE, layout="l-body-outset"}
 kable(total_realisasi_03, digits = 3, format.args = list(big.mark = ",", 
   scientific = FALSE)) %>%
@@ -64,5 +69,26 @@ kable(total_realisasi_03, digits = 3, format.args = list(big.mark = ",",
   column_spec(2, bold = T, width = "8em", background = "#e8f0fe") %>%
   row_spec(0, background = "grey", color = "white")
 
+```  
+  
+    
+--------------------------------------------------  
+
+### Realisasi sparepart berdasarkan kategori aktivitas  
+
+```{r, echo=FALSE}
+by_kategori_03 <- realisasi_03 %>% 
+                      
+                      group_by(KATEGORI1) %>%
+                      summarize(jumlah = sum(Amount.in.LC/1000000000, na.rm=TRUE)) 
+                      
+#format(by_kategori_03$jumlah, big.mark=",",scientific=FALSE)                      
+                                            
+g <- ggplot(by_kategori_03, aes(x = reorder(KATEGORI1, -jumlah), y = jumlah)) +
+                  geom_bar(stat = "identity", fill="steelblue") +
+                  
+                  labs(y= "Jumlah dalam Milyar", x = "Kategori Aktivitas") +
+                  coord_flip()
+g
 ```
 
